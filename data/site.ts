@@ -397,14 +397,15 @@ export type EventItem = {
   /**
    * Event flyer, shown in a 2:3 frame that it fills (trimming a little off flyers of another shape).
    * `posterPosition` picks which part stays (CSS object-position). A flyer much wider than 2:3 would
-   * lose edge text — extend its canvas to 2:3 instead (see public/events/dj-stan-da-man.jpg).
+   * lose edge text — extend its canvas to 2:3 instead (see public/events/dj-stan-da-man.jpg) and set
+   * `posterAspect` to the flyer's real shape. On phones flyers show at that real shape (default: the file's).
    */
-  | { image: StaticImageData; poster: true; posterPosition?: string }
+  | { image: StaticImageData; poster: true; posterPosition?: string; posterAspect?: string }
 );
 
 export const events: EventItem[] = [
   { id: "lm-karaoke", month: "EVERY", day: "THU", weekday: "Every Thursday", type: "LIVE MUSIC", name: "Karaoke Night", time: "7:30 PM – 10:30 PM", desc: "Sing, eat, drink, have fun. Great music, drink specials and good vibes — all are welcome.", image: karaokeNight, imageAlt: "Karaoke Night poster — every Thursday, 7:30 to 10:30 PM", poster: true },
-  { id: "lm-dj-stan", month: "EVERY", day: "FRI", weekday: "Friday Night", type: "LIVE MUSIC", name: "DJ Stan Da Man", time: "8:30 PM – Close", desc: "$3 draft beers & wells (10 to 1) and $4 Fireball & Rumple Minze. Show the post to the bartender for a free check-in shot.", image: djStanDaMan, imageAlt: "DJ Stan Da Man Friday Night poster with drink specials", poster: true },
+  { id: "lm-dj-stan", month: "EVERY", day: "FRI", weekday: "Friday Night", type: "LIVE MUSIC", name: "DJ Stan Da Man", time: "8:30 PM – Close", desc: "$3 draft beers & wells (10 to 1) and $4 Fireball & Rumple Minze. Show the post to the bartender for a free check-in shot.", image: djStanDaMan, imageAlt: "DJ Stan Da Man Friday Night poster with drink specials", poster: true, posterAspect: "1122 / 1402", posterPosition: "50% 14.2%" },
   { id: "lm-smoking-giants", month: "OCT", day: "17", weekday: "Saturday", type: "LIVE MUSIC", name: "The Smoking Giants", desc: "Live music at The Draft District.", image: smokingGiants, imageAlt: "The Smoking Giants poster — Saturday, October 17", poster: true, featured: true },
   { id: "lm-marris-beckett", month: "NOV", day: "07", weekday: "Saturday", type: "LIVE MUSIC", name: "Marris Beckett", desc: "Rock. Energy. Good times. Great music, cold drinks, good people — don't miss it!", image: marrisBeckett, imageAlt: "Marris Beckett live music poster — Saturday, November 7", poster: true },
   { id: "lm-mojo-universe", month: "NOV", day: "21", weekday: "Saturday", type: "LIVE MUSIC", name: "Mojo Universe", desc: "Live music on Saturday, Nov 21 — and back again Saturday, Dec 26.", image: mojoUniverse, imageAlt: "Mojo Universe live music poster — Saturdays, November 21 and December 26", poster: true },

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Phone } from "lucide-react";
 import { Reveal } from "@/components/Motion";
@@ -15,15 +16,30 @@ export function FeaturedEventSection({ event }: { event: EventItem }) {
         </p>
       </Reveal>
       <Reveal delay={0.08}>
-        <article className={cn("mt-8 grid overflow-hidden border border-line bg-panel", event.poster ? "lg:grid-cols-[420px_1fr]" : "lg:grid-cols-2")} data-testid="featured-event">
-          <div className={cn("relative overflow-hidden", !event.poster && "min-h-[280px]")}>
+        <article
+          className={cn(
+            "mt-8 grid overflow-hidden border border-line bg-panel",
+            event.poster ? "sm:grid-cols-[220px_1fr] lg:grid-cols-[300px_1fr]" : "lg:grid-cols-2"
+          )}
+          data-testid="featured-event"
+        >
+          <div
+            className={cn("relative overflow-hidden", event.poster ? "aspect-(--poster-aspect) bg-black sm:aspect-[2/3]" : "min-h-[280px]")}
+            style={
+              event.poster
+                ? ({ "--poster-aspect": event.posterAspect ?? `${event.image.width} / ${event.image.height}` } as CSSProperties)
+                : undefined
+            }
+          >
             {event.poster ? (
-              // Flyers keep their own aspect ratio so nothing is cropped or letterboxed.
+              // Same framing as the event cards: own shape on phones, 2:3 from sm up.
               <Image
                 src={event.image}
                 alt={event.imageAlt}
-                sizes="(min-width: 1024px) 420px, 100vw"
-                className="h-auto w-full"
+                fill
+                sizes="(min-width: 1024px) 300px, (min-width: 640px) 220px, 100vw"
+                style={{ objectPosition: event.posterPosition }}
+                className="object-cover"
               />
             ) : (
               <>

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -10,8 +11,15 @@ export function EventCard({ event }: { event: EventItem }) {
       className="group flex h-full flex-col overflow-hidden border border-line bg-graphite transition-all duration-200 hover:-translate-y-1 hover:border-ember/60"
       data-testid={`event-card-${event.id}`}
     >
-      {/* Flyers share one 2:3 frame so every card lines up. */}
-      <div className={cn("relative overflow-hidden", event.poster ? "aspect-[2/3] bg-black" : "aspect-[16/9]")}>
+      {/* On phones (one column) flyers show at their own shape; from sm up they share a 2:3 frame so cards line up. */}
+      <div
+        className={cn("relative overflow-hidden", event.poster ? "aspect-(--poster-aspect) bg-black sm:aspect-[2/3]" : "aspect-[16/9]")}
+        style={
+          event.poster
+            ? ({ "--poster-aspect": event.posterAspect ?? `${event.image.width} / ${event.image.height}` } as CSSProperties)
+            : undefined
+        }
+      >
         <Image
           src={event.image}
           alt={event.imageAlt}
